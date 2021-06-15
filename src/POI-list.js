@@ -9,10 +9,9 @@ export function POIlist() {
     fetcher
   );
 
-  const { image } = useSWR(
-    'http://foresight.australiaeast.cloudapp.azure.com:3000/pois/image/51/pois/51',
-   fetcher
-  );
+  // const image = 'http://foresight.australiaeast.cloudapp.azure.com:3000/pois/image/51/pois/51';
+  // console.log("image:");
+  // console.log(image);
 
   if (!data) {
     return <div className="container mt-5">Loading ...</div>;
@@ -34,9 +33,10 @@ export function POIlist() {
             </tr>
           </thead>
           <tbody>
-            {data.map((POI) => (
-              <POIitem  POI = {POI} image = {image} key={POI.ID} />
-            ))}
+            {data.map((POI) => {
+              let image = 'http://foresight.australiaeast.cloudapp.azure.com:3000/pois/image/' + POI.ID + '/pois/' + POI.ID;
+              return <POIitem  POI = {POI} image = {image} key={POI.ID} />;}
+            )}
           </tbody>
         </table>
       </div>
