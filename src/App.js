@@ -1,8 +1,15 @@
 import  { POIlist } from './POI-list';
+import { NavBar } from './NavBar';
 import './App.css';
 
 function App() {
-  return <POIlist />;
+  return (
+    <div>
+      <NavBar />
+      <POIlist />
+    </div>
+
+  );
 }
 
 export default App;
