@@ -28,7 +28,7 @@ export function NavBar() {
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>
             <Button className="bp3-minimal" icon="home" text="Home" />
-            <Button className="bp3-minimal" icon="document" text="Files" />
+            <Button className="bp3-minimal" icon="warning-sign" text="Alerts" />
             <NavbarDivider />
             <Button icon="user" className="bp3-minimal"></Button>
             <Button icon="notifications" className="bp3-minimal"></Button>
@@ -46,7 +46,7 @@ export function NavBar() {
             <Popover2 content={
                 <Menu>
                     <MenuItem icon="home" text="Home"></MenuItem>
-                    <MenuItem icon="document" text="Files"></MenuItem>
+                    <MenuItem icon="warning-sign" text="Alerts"></MenuItem>
                     <MenuDivider />
                     <MenuItem icon="user" text="User"></MenuItem>
                     <MenuItem icon="notifications" text="Notifications"></MenuItem>
