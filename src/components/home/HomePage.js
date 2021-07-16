@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import  { POIlist } from '../POI-list';
 
 const HomePage = () => (
-    <div className/>
+    <POIlist />
 );
 
 export default HomePage;
