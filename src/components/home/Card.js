@@ -7,8 +7,14 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 
+import Collapse from '@material-ui/core/Collapse';
+import { IconButton } from '@material-ui/core';
+import { ExpandMore, ExpandLess } from '@material-ui/icons';
+
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+
+
 
 // import useSWR from 'swr';
 // //import POIitem from './POIitem.js';
@@ -40,7 +46,8 @@ const useStyles= makeStyles({
     },
     detail:{
         position: "absolute", 
-        bottom: "8px"
+        bottom: "8px",
+        left: "8px"
     },
     profilePic:{
         borderRadius: "50px", 
@@ -50,10 +57,24 @@ const useStyles= makeStyles({
         display: 'flex', 
         float:"right"
     },
+    collapseIcon:{
+        left: "50%", 
+        marginLeft: "-18px", 
+        position: "absolute", 
+        bottom: "0px"
+    }
 });
 
 function PoiCard(poi){
+    const [collapsed, setCollapsed] = useState(false);
+
     const classes=useStyles();
+
+    let expandIcon;
+    if(!collapsed){
+        expandIcon = <ExpandMore fontSize="inherit"/>
+    }
+    else{ expandIcon =<ExpandLess fontSize="inherit"/>} 
 
     return (
         <Card className={classes.card}>
@@ -61,15 +82,26 @@ function PoiCard(poi){
                 <Typography className={classes.name} variant="h6">
                     {poi.firstname + " " + poi.lastname}
                 </Typography>
-                <Typography className={classes.detail}>
-                    DOB: {poi.DOB} 
-                    <br/> 
-                    Occupation: {poi.occupation}
-                    <br/>
-                    Religion: {poi.religion}
-                    <br/>
-                    Notes: {}
-                </Typography>
+            
+                <IconButton
+                    className={classes.collapseIcon}
+                    onClick={() => setCollapsed(!collapsed)}
+                    aria-label="more details"
+                    size="small"
+                    >
+                    {expandIcon}
+                </IconButton>
+                <Collapse in={collapsed} timeout="auto" unmountOnExit>
+                    <CardContent className={classes.detail}>
+                        <Typography >
+                        DOB: {poi.DOB} 
+                        <br/> 
+                        Occupation: {poi.occupation}
+                        <br/>
+                        Religion: {poi.religion}
+                        </Typography>
+                    </CardContent>
+                </Collapse>
                 <CardMedia
                     className={classes.profilePic}
                     image={poi.picture}
