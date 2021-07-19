@@ -1,5 +1,5 @@
 import React from "react";
-import  { POIlist } from '../POI-list';
+//import  { POIlist } from '../POI-list';
 import { CardView } from "./Card";
 
 const HomePage = () => (
