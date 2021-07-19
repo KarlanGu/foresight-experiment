@@ -77,12 +77,12 @@ function PoiCard(poi){
 
 function renderPoiCard(poiData){
     let pictureUrl = REACT_APP_BACKEND_URL+"/pois/image/" + poiData.ID + "/pois/" + poiData.ID
-
+    let date=poiData.DOB.slice(0,10)
     return(
         <PoiCard
             firstname = {poiData.FirstName?poiData.FirstName:"Unknown"} 
             lastname = {poiData.LastName?poiData.LastName:"Unknown"}
-            DOB = {poiData.DOB?poiData.DOB:"Unknown"}
+            DOB = {poiData.DOB?date:"Unknown"}
             occupation = {poiData.Occupation?poiData.Occupation:"Unknown"}
             religion = {poiData.Religion?poiData.Religion:"Unknown"}
             picture = {pictureUrl}
