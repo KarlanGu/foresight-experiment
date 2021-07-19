@@ -8,6 +8,9 @@ const Header = () => {
       <NavLink to="/" activeStyle={activeStyle} exact>
         Home
       </NavLink>
+      <NavLink activeStyle={activeStyle} exact>
+        Map
+      </NavLink>
     </nav>
   );
 };
