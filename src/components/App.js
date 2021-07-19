@@ -1,15 +1,15 @@
 
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import HomePage from "./home/HomePage";
 import Header from "./common/Header";
+import { CardView } from './home/Card';
 
 function App() {
   return (
     <div className="container-fluid">
       <Header/>
       <Switch>
-        <Route exact path="/" component={HomePage}/>
+        <Route exact path="/" component={()=><CardView/>}/>
       </Switch>
     </div>
   );

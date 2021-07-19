@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -10,9 +10,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import useSWR from 'swr';
-//import POIitem from './POIitem.js';
-import { fetcher } from '../helpers/SwrHelper';
+// import useSWR from 'swr';
+// //import POIitem from './POIitem.js';
+// import { fetcher } from '../helpers/SwrHelper';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPOIs } from '../../redux/actions/POIActions';
 
 const REACT_APP_BACKEND_URL="http://foresight.australiaeast.cloudapp.azure.com:3000";
 
@@ -64,6 +67,8 @@ function PoiCard(poi){
                     Occupation: {poi.occupation}
                     <br/>
                     Religion: {poi.religion}
+                    <br/>
+                    Notes: {}
                 </Typography>
                 <CardMedia
                     className={classes.profilePic}
@@ -93,12 +98,19 @@ function renderPoiCard(poiData){
 export function CardView(){
     const padding = "40px";
     
-    const { data } = useSWR(
-        REACT_APP_BACKEND_URL+'/pois',
-        fetcher
-    );
-    
-    if(!data){
+    // const { data } = useSWR(
+    //     REACT_APP_BACKEND_URL+'/pois',
+    //     fetcher
+    // );
+    const poiList = useSelector((state) => state.POIList);
+    const {loading, error, POIs} = poiList;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchPOIs());
+    }, [dispatch]);
+
+    if(loading){
         return (
             <div style={{paddingTop: padding, paddingLeft: padding, paddingRight: padding}}>
                 <Typography>Loading...</Typography>
@@ -106,7 +118,15 @@ export function CardView(){
             )
     }
 
-    if(data.length === 0){
+    if(error){
+        return(
+            <div style={{paddingTop: padding, paddingLeft: padding, paddingRight: padding}}>
+                <Typography>Error retrieving POI data.</Typography>
+            </div>
+            );
+    }
+
+    if(POIs.length === 0){
         return (
             <div style={{paddingTop: padding, paddingLeft: padding, paddingRight: padding}}>
                 <Typography>No POI data found.</Typography>
@@ -118,7 +138,7 @@ export function CardView(){
         <Grid container spacing={4}>
             <Grid container spacing={4}>
 
-                {data.map((poiData) => (
+                {POIs.map((poiData) => (
                     <Grid item key={poiData.ID} xs={12} sm={6} md={4}>
                         {renderPoiCard(poiData)}
                     </Grid>
