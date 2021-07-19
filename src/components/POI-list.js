@@ -1,9 +1,40 @@
 import React from 'react';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+
+import Typography from '@material-ui/core/Typography';
+
 import useSWR from 'swr';
 import POIitem from './POIitem.js';
-import { fetcher } from './SwrHelper';
+import { fetcher } from './helpers/SwrHelper';
+
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  cover: {
+    width: 151,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
 
 export function POIlist() {
+  const classes = useStyles()
   const { data } = useSWR(
     'http://foresight.australiaeast.cloudapp.azure.com:3000/pois',
     fetcher
@@ -11,7 +42,7 @@ export function POIlist() {
 
   // const image = 'http://foresight.australiaeast.cloudapp.azure.com:3000/pois/image/51/pois/51';
   // console.log("image:");
-  // console.log(image);
+  console.log(data);
 
   if (!data) {
     return <div className="container mt-5">Loading ...</div>;
