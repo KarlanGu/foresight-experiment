@@ -7,6 +7,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from './redux/configureStore'
 import { Provider as ReduxProvider } from 'react-redux'
 
+import "leaflet/dist/leaflet.css";
+import "leaflet-timedimension/dist/leaflet.timedimension.control.min.css";
+import "leaflet/dist/leaflet.js";
+
+
 const store = configureStore();
 
 
