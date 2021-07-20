@@ -1,27 +1,66 @@
-import React, { useEffect, useState, useRef } from 'react';
-import reactDom from 'react-dom';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-crossorigin=""/>
+
+const london = [51.505, -0.09]
+const melbourne = [ -37.809414 , 144.970177 ]
+const canberra = [-35.3180, 149.1448]
+
+const zoom = 13
+
+function DisplayPosition({ map }) {
+    const [position, setPosition] = useState(map.getCenter())
+  
+    const OnClick = loc => useCallback(() => {
+      console.log(loc);
+      map.setView(loc, zoom)
+    }, [map])
+
+    const onMove = useCallback(() => {
+      setPosition(map.getCenter())
+    }, [map])
+  
+    useEffect(() => {
+      map.on('move', onMove)
+      return () => {
+        map.off('move', onMove)
+      }
+    }, [map, onMove])
+  
+    return (
+      <div>
+        <p>
+            latitude: {position.lat.toFixed(4)}, longitude: {position.lng.toFixed(4)}{' '}
+            <button onClick={OnClick(london)}>London</button>
+            <button onClick={OnClick(melbourne)}>Melbourne</button>
+            <button onClick={OnClick(canberra)}>Canberra</button>
+        </p>
+      </div>
+    )
+  }
 
 export function MapView (){
-    return (
-        <React.Fragment> 
-        <h1>Hello mortal</h1>,
-        <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+    const [map, setMap] = useState(null)
+
+    const displayMap = useMemo(
+        () => (
+          <MapContainer
+            center={melbourne}
+            zoom={zoom}
+            scrollWheelZoom={false}
+            whenCreated={setMap}>
             <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={[51.505, -0.09]}>
-                <Popup>
-                    A pretty CSS3 popup. 
-                    <br /> 
-                    Easily customizable.
-                </Popup>
-            </Marker>
-        </MapContainer>
-        </React.Fragment>
-    ); 
+          </MapContainer>
+        ),
+        [],
+      )
+    
+      return (
+        <div>
+          {map ? <DisplayPosition map={map} /> : null}
+          {displayMap}
+        </div>
+      )
 };
