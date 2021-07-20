@@ -134,10 +134,13 @@ export function CardView(){
     //     REACT_APP_BACKEND_URL+'/pois',
     //     fetcher
     // );
+
+    //fetch state from store, since store is avaliable through provider in index.js
     const poiList = useSelector((state) => state.POIList);
     const {loading, error, POIs} = poiList;
     const dispatch = useDispatch();
 
+    //call action to update state from API
     useEffect(() => {
         dispatch(fetchPOIs());
     }, [dispatch]);
