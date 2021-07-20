@@ -11,7 +11,7 @@ function App() {
       <TabMenu/>
       <Switch>
         <Route exact path="/" component={()=><CardView/>}/>
-        <Route exact path="/Maps" component={()=><MapView/>}/>
+        <Route exact path="/Map" component={()=><MapView/>}/>
       </Switch>
     </div>
   );

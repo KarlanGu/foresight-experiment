@@ -1,3 +1,3 @@
 export function MapView (){
-    return <h>Maps</h>
+    return <h1>Hello mortal</h1> 
 };
