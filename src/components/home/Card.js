@@ -23,7 +23,7 @@ import Grid from '@material-ui/core/Grid';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPOIs } from '../../redux/actions/POIActions';
 
-const REACT_APP_BACKEND_URL="http://foresight.australiaeast.cloudapp.azure.com:3000";
+const {REACT_APP_BACKEND_URL} = process.env;
 
 const useStyles= makeStyles({
     card:{

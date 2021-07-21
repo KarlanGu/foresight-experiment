@@ -14,15 +14,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TabMenu() {
   const classes = useStyles();
-
   //console.log(window.location.pathname);
-  
-  const highlightTabIndex=
-    window.location.pathname === "/"?0
-      :window.location.pathname === "/map"?1
-      :0;
+  const navItems=[['Home','/'], ['Map','/map']]
+  const highlightTabIndex= navItems.reduce((currIndex,[_,path],index) => 
+    window.location.pathname===path?index
+      :currIndex
+  ,0)
   //console.log(highLightTabIndex)
-
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -30,24 +28,11 @@ export default function TabMenu() {
           value={highlightTabIndex}
           aria-label="menu tabs"
         >
-          <Tab label="Home" href="/" />
-          <Tab label="Map" href="/map" />
+          {navItems.map(([text, path]) => (
+              <Tab key= {text} label={text} href={path} />
+          ))}
         </Tabs>
       </AppBar>
     </div>
   );
 };
-// const Header = () => {
-//   
-//   return (
-//     <nav>
-//       <NavLink to="/" activeStyle={activeStyle} exact>
-//         Home
-//       </NavLink>
-//       {" | "}
-//       <NavLink to="/map" activeStyle={activeStyle} exact>
-//         Map
-//       </NavLink>
-//     </nav>
-//   );
-// };

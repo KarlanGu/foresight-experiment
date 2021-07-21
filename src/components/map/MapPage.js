@@ -1,7 +1,9 @@
 import { MapView } from './MapView';
+import ClippedDrawer from './MapPOISelection';
+
 const MapPage = () => (
-    //<POIlist />
-    <MapView />
+    //<MapView />
+    <ClippedDrawer/>
 );
 
 export default MapPage;
