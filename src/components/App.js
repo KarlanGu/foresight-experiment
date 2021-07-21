@@ -3,7 +3,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import TabMenu from "./common/Header";
 import { CardView } from './home/Card';
-import {MapView} from './map/Map';
+import MapPage from "./map/MapPage";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <TabMenu/>
       <Switch>
         <Route exact path="/" component={()=><CardView/>}/>
-        <Route exact path="/Map" component={()=><MapView/>}/>
+        <Route exact path="/Map" component={MapPage}/>
       </Switch>
     </div>
   );
