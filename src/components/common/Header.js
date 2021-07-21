@@ -19,7 +19,7 @@ export default function TabMenu() {
   const highlightTabIndex= navItems.reduce((currIndex,[_,path],index) => 
     window.location.pathname===path?index
       :currIndex
-  ,0)
+  ,null)
   //console.log(highLightTabIndex)
   return (
     <div className={classes.root}>

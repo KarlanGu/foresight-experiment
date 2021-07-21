@@ -1,9 +1,12 @@
 import { MapView } from './MapView';
-import ClippedDrawer from './MapPOISelection';
+import MapSideBar from './MapPOISelection';
 
+const Map= () => <MapView/> 
 const MapPage = () => (
     //<MapView />
-    <ClippedDrawer/>
+    <MapSideBar>
+        <Map/>
+    </MapSideBar>
 );
 
 export default MapPage;
