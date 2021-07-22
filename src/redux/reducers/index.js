@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import {POIsReducer} from './POIReducer';
+import {POIsReducer, POIReducer} from './POIReducer';
 
 const rootReducer = combineReducers({
-    POIList: POIsReducer
+    POIList: POIsReducer,
+    POI: POIReducer
 });
 
 export default rootReducer;

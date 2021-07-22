@@ -142,7 +142,7 @@ export function CardView(){
 
     //call action to update state from API
     useEffect(() => {
-        dispatch(fetchPOIs());
+        dispatch(fetchPOIs);
     }, [dispatch]);
 
     if(loading){

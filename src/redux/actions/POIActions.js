@@ -4,21 +4,23 @@ import axios from 'axios';
 
 const { REACT_APP_BACKEND_URL } = process.env;
 
-export const fetchPOIs = () => async (dispatch) => {
+const request= (requestType, succcessType, failType, url) => async (dispatch) => {
     dispatch({
-        type: POIS_REQUEST,
+        type: requestType,
     });
 
-    axios.get(`${REACT_APP_BACKEND_URL}/pois`).then((response) => {            
+    axios.get(url).then((response) => {            
         dispatch({ 
-            type: POIS_SUCCESS,
+            type: succcessType,
             payload: response.data
         });
     })
     .catch((error) => {
         dispatch({
-            type: POIS_FAIL,
+            type: failType,
             payload: error.response && error.response.data.message ? error.response.data.message : error.message,
         })
     });
-}
+};
+export const fetchPOIs = request(POIS_REQUEST,POIS_SUCCESS,POIS_FAIL,`${REACT_APP_BACKEND_URL}/pois`);
+export const fetchPOI = (id) => request(POI_REQUEST,POI_SUCCESS,POI_FAIL,`${REACT_APP_BACKEND_URL}/pois/${id}`);

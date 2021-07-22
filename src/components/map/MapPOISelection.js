@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 
-import { fetchPOIs } from '../../redux/actions/POIActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPOI } from '../../redux/actions/POIActions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -28,37 +29,47 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MapSideBar = ({children}) => {
-  const classes = useStyles();
-  console.log({children})
-  return (
-    <div className={classes.root}>
-      <Box>
-        <Toolbar />
-        <div className={classes.drawerContainer}>
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          {/* <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List> */}
+    const classes = useStyles();
+    //fetch state from store, since store is avaliable through provider in index.js
+    const poiList = useSelector((state) => state.POIList);
+    const {loading, error, POIs} = poiList;
+    const dispatch = useDispatch();
+    const [currPOISelected, setState] = useState(0);
+
+    //call action to update state from API
+    useEffect(() => {
+        dispatch(fetchPOI(currPOISelected));
+    },[dispatch]);
+
+    return (
+        <div className={classes.root}>
+        <Box>
+            <Toolbar />
+            <div className={classes.drawerContainer}>
+            <List>
+                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                <ListItem button key={text}>
+                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    <ListItemText primary={text} />
+                </ListItem>
+                ))}
+            </List>
+            <Divider />
+            {/* <List>
+                {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                <ListItem button key={text}>
+                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    <ListItemText primary={text} />
+                </ListItem>
+                ))}
+            </List> */}
+            </div>
+        </Box>
+        <main className={classes.content}>
+            <div>{children}</div>
+        </main>
         </div>
-      </Box>
-      <main className={classes.content}>
-          <div>{children}</div>
-      </main>
-    </div>
-  );
+    );
 }
 
 export default MapSideBar;
